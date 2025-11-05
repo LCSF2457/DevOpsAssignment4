@@ -42,7 +42,7 @@ jobs:
         if [ -f .env ]; then echo "Exists!"; else echo "Doesn't exist.."; fi
 
     - name: Build docker image
-      run: docker-compose build
+      run: docker compose build
 
     - name: Run docker container
-      run: docker-compose up -d
+      run: docker compose up -d
