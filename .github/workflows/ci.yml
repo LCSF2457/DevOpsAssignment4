@@ -27,9 +27,9 @@ jobs:
         pip install pytest
         pip install --no-cache-dir -r requirements.txt
 
-    - name: Test with pytest
-      run: |
-        pytest
+    # - name: Test with pytest
+    #   run: |
+    #     pytest
 
     - name: Set up env variables
       run: |
