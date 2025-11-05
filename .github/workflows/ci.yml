@@ -1,0 +1,48 @@
+name: Flask App CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Setup python
+      uses: actions/setup-python@v3
+      with:
+        python-version: 3.13
+
+    - name: Install deps
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest
+        pip install --no-cache-dir -r requirements.txt
+
+    - name: Test with pytest
+      run: |
+        pytest
+
+    - name: Set up env variables
+      run: |
+        echo "APP_MESSAGE=${{ secrets.APP_MESSAGE }}" >> .env
+        echo "APP_HEALTH=${{ secrets.APP_HEALTH }}" >> .env
+
+    - name: Debug env
+      run: |
+        echo "Ensuring .env exists.."
+        if [ -f .env ]; then echo "Exists!"; else echo "Doesn't exist.."; fi
+
+    - name: Build docker image
+      run: docker-compose build
+
+    - name: Run docker container
+      run: docker-compose up -d
