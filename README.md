@@ -35,7 +35,7 @@ cd DevOpsAssignment4
 
 2. Create env file from env.example
 
-3. Run application
+3. Run application (make sure Docker is running)
 ```bash
 docker-compose up
 ```
